@@ -1,0 +1,18 @@
+{
+    "name": "ehtterami/ip-truffle",
+    "description": "Simple IP translator",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Ehtterami\\IpTruffle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "S. Sina Ehtterami",
+            "email": "ehtterami@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
