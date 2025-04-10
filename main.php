@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_NOTICE);
+
 require __DIR__ . '/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
@@ -40,26 +42,27 @@ class Translate extends Command {
 
             $result = $this->translator->translate($ipAddress);
 
+            $isBinaryInput = preg_match('/^(?:[01]{8}\.){3}[01]{8}$/', $ipAddress);
+            $isDecimalOutput = preg_match('/^(?:\d{1,3}\.){3}\d{1,3}$/', $result['ip']);
+
             $table = new Table($output);
-            $headers = (['Input', 'Translate', 'Default Subnet Mask']);
+            $table->setHeaderTitle('Translate Table');
+            $table->setStyle('box');
+            $headers = ['Input', 'Translate'];
 
-            if(isset($result['mask'])) {
-                $headers[] = 'Custom Subnet Mask';
+            if($isBinaryInput && $isDecimalOutput) {
+                $table->setHeaders($headers)->addRow([$ipAddress, $result['ip']]);
+            } else {
+                if(isset($result['mask'])) {
+                    $headers = ['Input', 'Translate', 'Default Subnet Mask', 'Custom Subnet Mask'];
 
-                $table->setHeaders($headers)
-                        ->addRow([
-                            $ipAddress,
-                            $result['ip'],
-                            $result['default_mask'],
-                            $result['mask']
-                        ]);
-            } else{
-                $table->setHeaders($headers)
-                        ->addRow([
-                            $ipAddress,
-                            $result['ip'],
-                            $result['default_mask']
-                        ]);
+                    $table->setHeaders($headers)->addRow([
+                        $ipAddress,
+                        $result['ip'],
+                        $result['default_mask'],
+                        $result['mask'],
+                    ]);
+                }
             }
 
             $output->writeln("\n<info>Translate Result:</info>");
@@ -73,7 +76,7 @@ class Translate extends Command {
     }
 }
 
-$application = new Application('IP Truffle', '1.3.1');
+$application = new Application('IP Truffle', '1.4.3');
 $application->add(new Translate());
 BannerFacade::render();
 $application->run();

@@ -41,9 +41,9 @@ class TranslatorService
         $firstOctet = is_numeric($octets[0]) ? $octets[0] : bindec($octets[0]);
 
         return match (true) {
-            $firstOctet <= 127 => '255.0.0.0',
-            $firstOctet <= 191 => '255.255.0.0',
-            $firstOctet <= 223 => '255.255.255.0',
+            $firstOctet <= 127 => 'Type A: 255.0.0.0',
+            $firstOctet <= 191 => 'Type B: 255.255.0.0',
+            $firstOctet <= 223 => 'Type C: 255.255.255.0',
             default => '255.255.255.255'
         };
     }
@@ -57,20 +57,22 @@ class TranslatorService
 
     private function isDecimalFormat(array $octets): bool
     {
-        return array_reduce(
-            $octets,
-            fn(bool $carry, mixed $octet): bool => $carry && is_numeric($octet) && $octet >= 0 && $octet <= self::MAX_OCTET_VALUE && !preg_match('/^[01]{8}$/', (string) $octet),
-            true
-        );
+        foreach($octets as $octet) {
+            if(!is_numeric($octet) || $octet < 0 || $octet > self::MAX_OCTET_VALUE) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private function isBinaryFormat(array $octets): bool
     {
-        return array_reduce(
-            $octets,
-            fn(bool $carry, mixed $octet): bool => $carry && is_string($octet) && preg_match('/^[01]{8}$/', (string) $octet),
-            true
-        );
+        foreach($octets as $octet) {
+            if(!is_string($octet) || !preg_match('/^[01]{8}$/', $octet)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private function toDecimalNotation(array $octets): string

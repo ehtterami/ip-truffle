@@ -67,6 +67,6 @@ class ReaderService
 
     private function parseBinary(string $input): array
     {
-        return array_map(fn(string $octet) => bindec($octet), explode('.', $input));
+        return explode('.', $input);
     }
 }
