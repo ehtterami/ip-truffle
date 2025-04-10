@@ -7,6 +7,11 @@
             "Ehtterami\\IpTruffle\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Ehtterami\\IpTruffle\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "S. Sina Ehtterami",
@@ -16,5 +21,11 @@
     "minimum-stability": "dev",
     "require": {
         "symfony/console": "7.3.x-dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.2@dev"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

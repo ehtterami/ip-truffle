@@ -9,7 +9,23 @@ class TranslatorService
     private const MAX_OCTET_VALUE = 255;
     private const BINARY_LENGTH = 8;
 
-    public function translate(array $octets): string
+    public function translate(array $input): array
+    {
+        if(isset($input['ip'], $input['mask'])) {
+            return [
+                'ip' => $this->translateOctets($input['ip']),
+                'mask' => $this->translateOctets($input['mask']),
+                'default_mask' => $this->getDefaultSubnetMask($input['ip'])
+            ];
+        }
+
+        return [
+            'ip' => $this->translateOctets($input['ip']),
+            'default_mask' => $this->getDefaultSubnetMask($input['ip'])
+        ];
+    }
+
+    public function translateOctets(array $octets): string
     {
         $this->validate($octets);
 
@@ -17,6 +33,18 @@ class TranslatorService
             $this->isDecimalFormat($octets) => $this->toBinaryNotation($octets),
             $this->isBinaryFormat($octets) => $this->toDecimalNotation($octets),
             default => throw new InvalidArgumentException('Invalid octet format')
+        };
+    }
+
+    private function getDefaultSubnetMask(array $octets): string
+    {
+        $firstOctet = is_numeric($octets[0]) ? $octets[0] : bindec($octets[0]);
+
+        return match (true) {
+            $firstOctet <= 127 => '255.0.0.0',
+            $firstOctet <= 191 => '255.255.0.0',
+            $firstOctet <= 223 => '255.255.255.0',
+            default => '255.255.255.255'
         };
     }
 

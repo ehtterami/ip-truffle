@@ -41,8 +41,26 @@ class Translate extends Command {
             $result = $this->translator->translate($ipAddress);
 
             $table = new Table($output);
-            $table->setHeaders(['Input', 'Translate']);
-            $table->addRow([$ipAddress, $result]);
+            $headers = (['Input', 'Translate', 'Default Subnet Mask']);
+
+            if(isset($result['mask'])) {
+                $headers[] = 'Custom Subnet Mask';
+
+                $table->setHeaders($headers)
+                        ->addRow([
+                            $ipAddress,
+                            $result['ip'],
+                            $result['default_mask'],
+                            $result['mask']
+                        ]);
+            } else{
+                $table->setHeaders($headers)
+                        ->addRow([
+                            $ipAddress,
+                            $result['ip'],
+                            $result['default_mask']
+                        ]);
+            }
 
             $output->writeln("\n<info>Translate Result:</info>");
             $table->render();

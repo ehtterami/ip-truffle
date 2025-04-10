@@ -15,7 +15,7 @@ class TranslateFacade {
         $this->translatorService = new TranslatorService();
     }
 
-    public function translate(string $input): string
+    public function translate(string $input): string|array
     {
         $octets = $this->readerService->read($input);
         return $this->translatorService->translate($octets);
