@@ -31,7 +31,7 @@ class TranslatorService
     {
         return array_reduce(
             $octets,
-            fn(bool $carry, mixed $octet): bool => $carry && is_numeric($octet) && $octet >= 0 && $octet <= self::MAX_OCTET_VALUE,
+            fn(bool $carry, mixed $octet): bool => $carry && is_numeric($octet) && $octet >= 0 && $octet <= self::MAX_OCTET_VALUE && !preg_match('/^[01]{8}$/', (string) $octet),
             true
         );
     }

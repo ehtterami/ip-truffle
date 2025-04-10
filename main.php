@@ -55,7 +55,7 @@ class Translate extends Command {
     }
 }
 
-$application = new Application('IP Truffle', '1.3.0');
+$application = new Application('IP Truffle', '1.3.1');
 $application->add(new Translate());
 BannerFacade::render();
 $application->run();
