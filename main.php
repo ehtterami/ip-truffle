@@ -13,6 +13,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Ehtterami\IpTruffle\Facades\BannerFacade;
 use Ehtterami\IpTruffle\Facades\TranslateFacade;
+use Ehtterami\IpTruffle\Facades\SubnetCalculatorFacade;
 
 class Translate extends Command {
     protected static $defaultName = 'translate';
@@ -76,7 +77,8 @@ class Translate extends Command {
     }
 }
 
-$application = new Application('IP Truffle', '1.4.3');
+$application = new Application('IP Truffle', '2.4.3');
 $application->add(new Translate());
+$application->add(new SubnetCalculatorFacade());
 BannerFacade::render();
 $application->run();
