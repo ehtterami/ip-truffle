@@ -6,6 +6,28 @@ use InvalidArgumentException;
 
 class TranslatorService
 {
+    /**
+     * Singleton Pattern
+     */
+    private static ?TranslatorService $instance = null;
+
+    private function __construct()
+    {
+        // 
+    }
+
+    public static function getInstance(): TranslatorService
+    {
+        if(self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    // * Class Body
+
+    
     private const MAX_OCTET_VALUE = 255;
     private const BINARY_LENGTH = 8;
 

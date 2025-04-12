@@ -5,6 +5,27 @@ use InvalidArgumentException;
 
 class ReaderService
 {
+    /**
+     * Singleton Pattern
+     */
+    private static ?ReaderService $instance = null;
+
+    private function __construct()
+    {
+        // 
+    }
+
+    public static function getInstance(): ReaderService
+    {
+        if(self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    // * Class Body
+    
     private const IPV4_PATTERN = '/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
     private const BINARY_PATTERN = '/^(?:[01]{8}\.){3}[01]{8}$/';
     private const IPV4_RANGE_PATTERN = '/^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\/(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?$/';

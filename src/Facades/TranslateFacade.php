@@ -11,8 +11,8 @@ class TranslateFacade {
 
     public function __construct()
     {
-        $this->readerService = new ReaderService();
-        $this->translatorService = new TranslatorService();
+        $this->readerService = ReaderService::getInstance();
+        $this->translatorService = TranslatorService::getInstance();
     }
 
     public function translate(string $input): string|array
