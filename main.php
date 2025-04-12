@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_NOTICE);
+// error_reporting(E_NOTICE);
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -13,6 +13,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Ehtterami\IpTruffle\Facades\BannerFacade;
 use Ehtterami\IpTruffle\Facades\TranslateFacade;
+use Ehtterami\IpTruffle\Applications\CalculateSubnet;
 
 class Translate extends Command {
     protected static $defaultName = 'translate';
@@ -76,7 +77,8 @@ class Translate extends Command {
     }
 }
 
-$application = new Application('IP Truffle', '1.4.3');
+$application = new Application('IP Truffle', '2.2.0');
 $application->add(new Translate());
+$application->add(new CalculateSubnet());
 BannerFacade::render();
 $application->run();
