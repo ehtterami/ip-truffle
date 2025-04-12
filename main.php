@@ -1,6 +1,6 @@
 <?php
 
-// error_reporting(E_NOTICE);
+error_reporting(E_NOTICE);
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -78,7 +78,7 @@ class Translate extends Command {
     }
 }
 
-$application = new Application('IP Truffle', '2.3.0');
+$application = new Application('IP Truffle', '2.3.2');
 $application->add(new Translate());
 $application->add(new CalculateSubnet());
 $application->add(new CalculateNetID());
