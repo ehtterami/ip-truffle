@@ -14,6 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Ehtterami\IpTruffle\Facades\BannerFacade;
 use Ehtterami\IpTruffle\Facades\TranslateFacade;
 use Ehtterami\IpTruffle\Applications\CalculateSubnet;
+use Ehtterami\IpTruffle\Applications\CalculateNetID;
 
 class Translate extends Command {
     protected static $defaultName = 'translate';
@@ -77,8 +78,9 @@ class Translate extends Command {
     }
 }
 
-$application = new Application('IP Truffle', '2.2.0');
+$application = new Application('IP Truffle', '2.3.0');
 $application->add(new Translate());
 $application->add(new CalculateSubnet());
+$application->add(new CalculateNetID());
 BannerFacade::render();
 $application->run();

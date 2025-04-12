@@ -13,7 +13,7 @@ use InvalidArgumentException;
 
 class CalculateSubnet extends Command
 {
-    protected static $defaultName = 'calculate';
+    protected static $defaultName = 'calculate:subnet';
     private SubnetCalculatorFacade $calculator;
 
     public function __construct()
